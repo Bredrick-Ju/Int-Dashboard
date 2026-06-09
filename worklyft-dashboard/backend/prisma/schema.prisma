@@ -1,0 +1,134 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Prisma Schema — Worklyft Real-Time Revenue Operations Dashboard
+// ─────────────────────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── User ─────────────────────────────────────────────────────────────────────
+
+model User {
+  id         String     @id @default(cuid())
+  name       String
+  email      String     @unique
+  strategies Strategy[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@map("users")
+}
+
+// ─── Strategy ────────────────────────────────────────────────────────────────
+
+model Strategy {
+  id            String    @id @default(cuid())
+  userId        String
+  name          String
+  budget        Float
+  targetRevenue Float
+  progress      Float     @default(0)
+  startDate     DateTime
+  endDate       DateTime
+  metadata      Json      @default("{}")
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channels      Channel[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("strategies")
+}
+
+// ─── Channel ─────────────────────────────────────────────────────────────────
+
+model Channel {
+  id         String     @id @default(cuid())
+  strategyId String
+  name       String
+  cost       Float
+  metadata   Json       @default("{}")
+  strategy   Strategy   @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+  activities Activity[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@map("channels")
+}
+
+// ─── Activity ────────────────────────────────────────────────────────────────
+
+enum ActivityStatus {
+  ACTIVE
+  PENDING
+  COMPLETED
+}
+
+model Activity {
+  id        String         @id @default(cuid())
+  channelId String
+  name      String
+  assignee  String
+  cost      Float
+  status    ActivityStatus @default(PENDING)
+  startDate DateTime
+  endDate   DateTime
+  channel   Channel        @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  leads     Lead[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@map("activities")
+}
+
+// ─── Lead ────────────────────────────────────────────────────────────────────
+
+enum LeadStage {
+  DRAFT
+  CHEMISTRY
+  SALES
+  EVALUATION
+  CLOSURE
+}
+
+model Lead {
+  id         String     @id @default(cuid())
+  activityId String
+  company    String
+  contactName String
+  value      Float
+  stage      LeadStage  @default(DRAFT)
+  status     String     @default("open")
+  activity   Activity   @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  orders     Order[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@map("leads")
+}
+
+// ─── Order ───────────────────────────────────────────────────────────────────
+
+enum DeliveryStatus {
+  PENDING
+  IN_PROGRESS
+  DELIVERED
+}
+
+model Order {
+  id             String         @id @default(cuid())
+  leadId         String
+  value          Float
+  paidAmount     Float
+  deliveryStatus DeliveryStatus @default(PENDING)
+  deliveryDate   DateTime
+  lead           Lead           @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@map("orders")
+}
