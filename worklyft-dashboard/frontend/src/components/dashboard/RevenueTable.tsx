@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useState, useMemo } from 'react';
-import { Search, ArrowUpDown, ChevronDown, Filter, DollarSign } from 'lucide-react';
+import { Search, ArrowUpDown, ChevronDown, Filter, IndianRupee } from 'lucide-react';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { cn } from '@/lib/utils';
 import type { Order, Lead } from '@/types';

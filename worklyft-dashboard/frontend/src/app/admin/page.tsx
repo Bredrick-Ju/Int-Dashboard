@@ -244,7 +244,7 @@ export default function AdminPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="order-value" className="block text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                      Contract Value ($)
+                      Contract Value (₹)
                     </label>
                     <input
                       id="order-value"
@@ -256,7 +256,7 @@ export default function AdminPage() {
                   </div>
                   <div>
                     <label htmlFor="order-paid" className="block text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                      Amount Paid ($)
+                      Amount Paid (₹)
                     </label>
                     <input
                       id="order-paid"

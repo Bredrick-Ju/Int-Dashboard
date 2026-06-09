@@ -4,13 +4,14 @@
 
 export function formatCurrency(value: number, compact = false): string {
   if (compact) {
-    if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(1)}M`;
-    if (value >= 1_000) return `$${(value / 1_000).toFixed(0)}K`;
-    return `$${value.toFixed(0)}`;
+    if (value >= 1_00_00_000) return `₹${(value / 1_00_00_000).toFixed(1)}Cr`;
+    if (value >= 1_00_000) return `₹${(value / 1_00_000).toFixed(1)}L`;
+    if (value >= 1_000) return `₹${(value / 1_000).toFixed(0)}K`;
+    return `₹${value.toFixed(0)}`;
   }
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'INR',
     maximumFractionDigits: 0,
   }).format(value);
 }

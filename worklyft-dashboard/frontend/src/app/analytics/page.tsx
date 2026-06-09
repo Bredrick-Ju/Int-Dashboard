@@ -8,7 +8,7 @@ import { useMemo } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useDashboard } from '@/hooks/useDashboard';
 import { formatCurrency, formatNumber, formatPercent } from '@/lib/formatters';
-import { AlertCircle, TrendingUp, DollarSign, Target, Award, PieChart, BarChart2 } from 'lucide-react';
+import { AlertCircle, TrendingUp, IndianRupee, Target, Award, PieChart, BarChart2 } from 'lucide-react';
 import { StrategyBudgetChart } from '@/components/dashboard/StrategyBudgetChart';
 import { ChannelPerformanceChart } from '@/components/dashboard/ChannelPerformanceChart';
 import { cn } from '@/lib/utils';
@@ -129,7 +129,7 @@ export default function AnalyticsPage() {
 
           <div className="glass-card p-5 flex items-center gap-4">
             <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0">
-              <DollarSign className="w-5 h-5" />
+              <IndianRupee className="w-5 h-5" />
             </div>
             <div>
               <p className="text-xs text-muted-foreground">Budget Allocation</p>

@@ -8,7 +8,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useDashboard } from '@/hooks/useDashboard';
 import { RevenueTable } from '@/components/dashboard/RevenueTable';
 import { formatCurrency, formatNumber } from '@/lib/formatters';
-import { AlertCircle, CreditCard, DollarSign, Hourglass, CheckCircle2 } from 'lucide-react';
+import { AlertCircle, CreditCard, IndianRupee, Hourglass, CheckCircle2 } from 'lucide-react';
 
 export default function RevenuePage() {
   const { data, isLoading, isError, error } = useDashboard();
@@ -52,7 +52,7 @@ export default function RevenuePage() {
     {
       title: 'Total Contract Value',
       value: formatCurrency(revenueSummary.totalRevenue),
-      icon: <DollarSign className="w-4 h-4 text-indigo-400" />,
+      icon: <IndianRupee className="w-4 h-4 text-indigo-400" />,
       sub: 'All registered sales orders',
       bg: 'bg-indigo-500/10 border-indigo-500/20',
     },

@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 import {
   LayoutDashboard,
   BarChart3,
-  DollarSign,
+  IndianRupee,
   Settings2,
   Zap,
 } from 'lucide-react';
@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils';
 const NAV = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { label: 'Analytics', href: '/analytics', icon: BarChart3 },
-  { label: 'Revenue', href: '/revenue', icon: DollarSign },
+  { label: 'Revenue', href: '/revenue', icon: IndianRupee },
   { label: 'Admin', href: '/admin', icon: Settings2 },
 ];
 

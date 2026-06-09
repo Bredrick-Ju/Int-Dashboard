@@ -46,7 +46,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
       queryClient.invalidateQueries({ queryKey: ['dashboard'] });
       queryClient.invalidateQueries({ queryKey: ['orders'] });
       toast.success('Order Created', {
-        description: `New order for ${payload.order.lead?.company ?? 'unknown'} — $${payload.order.value.toLocaleString()}`,
+        description: `New order for ${payload.order.lead?.company ?? 'unknown'} — ₹${payload.order.value.toLocaleString('en-IN')}`,
         duration: 4000,
       });
     };

@@ -4,7 +4,7 @@
 // components/dashboard/KpiCards.tsx — KPI cards grid
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { DollarSign, ShoppingCart, Users, Target } from 'lucide-react';
+import { IndianRupee, ShoppingCart, Users, Target } from 'lucide-react';
 import { KpiCard } from './KpiCard';
 import { formatCurrency, formatNumber } from '@/lib/formatters';
 import type { KpiData } from '@/types';
@@ -20,7 +20,7 @@ export function KpiCards({ kpis }: KpiCardsProps) {
       title: 'Total Revenue',
       value: kpis.totalRevenue,
       growth: kpis.revenueGrowth,
-      icon: <DollarSign className="w-4 h-4 text-indigo-400" aria-hidden="true" />,
+      icon: <IndianRupee className="w-4 h-4 text-indigo-400" aria-hidden="true" />,
       formatter: (v: number) => formatCurrency(v, true),
       color: 'bg-indigo-500/10 border-indigo-500/20',
     },
