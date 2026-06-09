@@ -41,7 +41,7 @@ export function StrategyBudgetChart({ data }: Props) {
         </span>
       </div>
       <ResponsiveContainer width="100%" height={220}>
-        <BarChart data={data} margin={{ top: 8, right: 4, left: -20, bottom: 0 }} barGap={4}>
+        <BarChart data={data} margin={{ top: 8, right: 4, left: 10, bottom: 0 }} barGap={4}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
           <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#64748b' }} axisLine={false} tickLine={false} />
           <YAxis tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} tickFormatter={(v) => formatCurrency(v, true)} />

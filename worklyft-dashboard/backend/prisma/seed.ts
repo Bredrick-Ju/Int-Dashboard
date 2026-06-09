@@ -279,13 +279,13 @@ async function main() {
 
   // Orders for User A
   await Promise.all([
-    prisma.order.create({ data: { leadId: leadsA[0].id, value: 420000, paidAmount: 420000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2025-08-15') } }),
-    prisma.order.create({ data: { leadId: leadsA[5].id, value: 520000, paidAmount: 260000, deliveryStatus: DeliveryStatus.IN_PROGRESS, deliveryDate: new Date('2025-10-01') } }),
-    prisma.order.create({ data: { leadId: leadsA[13].id, value: 24000, paidAmount: 24000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2025-05-30') } }),
-    prisma.order.create({ data: { leadId: leadsA[14].id, value: 18000, paidAmount: 9000, deliveryStatus: DeliveryStatus.IN_PROGRESS, deliveryDate: new Date('2025-08-30') } }),
-    prisma.order.create({ data: { leadId: leadsA[9].id, value: 430000, paidAmount: 215000, deliveryStatus: DeliveryStatus.PENDING, deliveryDate: new Date('2025-11-15') } }),
-    prisma.order.create({ data: { leadId: leadsA[6].id, value: 310000, paidAmount: 155000, deliveryStatus: DeliveryStatus.IN_PROGRESS, deliveryDate: new Date('2025-09-30') } }),
-    prisma.order.create({ data: { leadId: leadsA[10].id, value: 280000, paidAmount: 280000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2025-07-20') } }),
+    prisma.order.create({ data: { leadId: leadsA[0].id, value: 420000, paidAmount: 420000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2026-06-05') } }),
+    prisma.order.create({ data: { leadId: leadsA[5].id, value: 520000, paidAmount: 260000, deliveryStatus: DeliveryStatus.IN_PROGRESS, deliveryDate: new Date('2026-05-20') } }),
+    prisma.order.create({ data: { leadId: leadsA[13].id, value: 24000, paidAmount: 24000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2026-01-15') } }),
+    prisma.order.create({ data: { leadId: leadsA[14].id, value: 18000, paidAmount: 9000, deliveryStatus: DeliveryStatus.IN_PROGRESS, deliveryDate: new Date('2026-04-10') } }),
+    prisma.order.create({ data: { leadId: leadsA[9].id, value: 430000, paidAmount: 215000, deliveryStatus: DeliveryStatus.PENDING, deliveryDate: new Date('2026-03-22') } }),
+    prisma.order.create({ data: { leadId: leadsA[6].id, value: 310000, paidAmount: 155000, deliveryStatus: DeliveryStatus.IN_PROGRESS, deliveryDate: new Date('2026-02-28') } }),
+    prisma.order.create({ data: { leadId: leadsA[10].id, value: 280000, paidAmount: 280000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2026-05-08') } }),
   ]);
 
   // ─── User B: Steady State ────────────────────────────────────────────────
@@ -450,10 +450,10 @@ async function main() {
 
   // Orders for User B
   await Promise.all([
-    prisma.order.create({ data: { leadId: leadsB[0].id, value: 84000, paidAmount: 84000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2025-07-10') } }),
-    prisma.order.create({ data: { leadId: leadsB[7].id, value: 74000, paidAmount: 37000, deliveryStatus: DeliveryStatus.IN_PROGRESS, deliveryDate: new Date('2025-09-01') } }),
-    prisma.order.create({ data: { leadId: leadsB[2].id, value: 48000, paidAmount: 24000, deliveryStatus: DeliveryStatus.PENDING, deliveryDate: new Date('2025-10-15') } }),
-    prisma.order.create({ data: { leadId: leadsB[5].id, value: 56000, paidAmount: 56000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2025-06-30') } }),
+    prisma.order.create({ data: { leadId: leadsB[0].id, value: 84000, paidAmount: 84000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2026-06-01') } }),
+    prisma.order.create({ data: { leadId: leadsB[7].id, value: 74000, paidAmount: 37000, deliveryStatus: DeliveryStatus.IN_PROGRESS, deliveryDate: new Date('2026-04-18') } }),
+    prisma.order.create({ data: { leadId: leadsB[2].id, value: 48000, paidAmount: 24000, deliveryStatus: DeliveryStatus.PENDING, deliveryDate: new Date('2026-03-05') } }),
+    prisma.order.create({ data: { leadId: leadsB[5].id, value: 56000, paidAmount: 56000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2026-02-12') } }),
   ]);
 
   // ─── User C: Early Stage ─────────────────────────────────────────────────
@@ -544,8 +544,8 @@ async function main() {
 
   // Orders for User C
   await Promise.all([
-    prisma.order.create({ data: { leadId: leadsC[2].id, value: 3600, paidAmount: 3600, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2025-06-10') } }),
-    prisma.order.create({ data: { leadId: leadsC[0].id, value: 8400, paidAmount: 4200, deliveryStatus: DeliveryStatus.PENDING, deliveryDate: new Date('2025-09-30') } }),
+    prisma.order.create({ data: { leadId: leadsC[2].id, value: 3600, paidAmount: 3600, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2026-05-25') } }),
+    prisma.order.create({ data: { leadId: leadsC[0].id, value: 8400, paidAmount: 4200, deliveryStatus: DeliveryStatus.PENDING, deliveryDate: new Date('2026-01-30') } }),
   ]);
 
   console.log('✅ Seed complete!');
