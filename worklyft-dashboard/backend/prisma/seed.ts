@@ -32,7 +32,7 @@ async function main() {
   const userA = await prisma.user.create({
     data: {
       name: 'Ashwin',
-      email: 'marcus@aggressivegrowth.io',
+      email: 'ashwin@aggressivegrowth.io',
     },
   });
 
@@ -45,20 +45,20 @@ async function main() {
       progress: 78,
       startDate: new Date('2025-07-01'),
       endDate: new Date('2025-09-30'),
-      metadata: { priority: 'critical', region: 'North America', tier: 'enterprise' },
+      metadata: { priority: 'critical', region: 'South Asia', tier: 'enterprise' },
     },
   });
 
   const stratA2 = await prisma.strategy.create({
     data: {
       userId: userA.id,
-      name: 'APAC Market Penetration',
+      name: 'South India Market Penetration',
       budget: 620000,
       targetRevenue: 2800000,
       progress: 62,
       startDate: new Date('2025-06-01'),
       endDate: new Date('2025-12-31'),
-      metadata: { priority: 'high', region: 'APAC', tier: 'mid-market' },
+      metadata: { priority: 'high', region: 'South India', tier: 'mid-market' },
     },
   });
 
@@ -71,7 +71,7 @@ async function main() {
       progress: 91,
       startDate: new Date('2025-01-01'),
       endDate: new Date('2025-06-30'),
-      metadata: { priority: 'medium', region: 'Global', tier: 'smb' },
+      metadata: { priority: 'medium', region: 'Pan India', tier: 'smb' },
     },
   });
 
@@ -107,9 +107,9 @@ async function main() {
   const chanA2_1 = await prisma.channel.create({
     data: {
       strategyId: stratA2.id,
-      name: 'Partner Channel Asia',
+      name: 'Partner Channel South India',
       cost: 210000,
-      metadata: { partners: 18, region: 'SEA, ANZ, JP' },
+      metadata: { partners: 18, region: 'Tamil Nadu, Karnataka, Kerala' },
     },
   });
 
@@ -146,7 +146,7 @@ async function main() {
     data: {
       channelId: chanA1_1.id,
       name: 'Q3 Enterprise Keyword Campaign',
-      assignee: 'Sofia Chen',
+      assignee: 'Karthik Kumar',
       cost: 95000,
       status: ActivityStatus.ACTIVE,
       startDate: new Date('2025-07-01'),
@@ -158,7 +158,7 @@ async function main() {
     data: {
       channelId: chanA1_1.id,
       name: 'Retargeting Sequence - Enterprise',
-      assignee: 'James Park',
+      assignee: 'Rajesh Mohan',
       cost: 45000,
       status: ActivityStatus.ACTIVE,
       startDate: new Date('2025-07-15'),
@@ -171,7 +171,7 @@ async function main() {
     data: {
       channelId: chanA1_2.id,
       name: 'ABM Tier-1 Account Outreach',
-      assignee: 'Elena Vasquez',
+      assignee: 'Suresh Krishnan',
       cost: 120000,
       status: ActivityStatus.ACTIVE,
       startDate: new Date('2025-07-01'),
@@ -183,7 +183,7 @@ async function main() {
     data: {
       channelId: chanA1_2.id,
       name: 'LinkedIn Thought Leadership Series',
-      assignee: 'David Kim',
+      assignee: 'Venkat Ravi',
       cost: 55000,
       status: ActivityStatus.COMPLETED,
       startDate: new Date('2025-06-01'),
@@ -195,7 +195,7 @@ async function main() {
   const actA1_3_1 = await prisma.activity.create({
     data: {
       channelId: chanA1_3.id,
-      name: 'Gartner Summit Presence',
+      name: 'Nasscom Summit Presence',
       assignee: 'Ashwin',
       cost: 85000,
       status: ActivityStatus.COMPLETED,
@@ -208,8 +208,8 @@ async function main() {
   const actA2_1_1 = await prisma.activity.create({
     data: {
       channelId: chanA2_1.id,
-      name: 'Southeast Asia Partner Enablement',
-      assignee: 'Priya Nair',
+      name: 'South India Partner Enablement',
+      assignee: 'Murugan Pillai',
       cost: 110000,
       status: ActivityStatus.ACTIVE,
       startDate: new Date('2025-06-01'),
@@ -221,8 +221,8 @@ async function main() {
   const actA2_2_1 = await prisma.activity.create({
     data: {
       channelId: chanA2_2.id,
-      name: 'APAC Industry Content Program',
-      assignee: 'Wei Zhang',
+      name: 'India Industry Content Program',
+      assignee: 'Ganesh Iyer',
       cost: 45000,
       status: ActivityStatus.ACTIVE,
       startDate: new Date('2025-06-01'),
@@ -235,7 +235,7 @@ async function main() {
     data: {
       channelId: chanA3_1.id,
       name: 'Freemium to Paid Nurture Flow',
-      assignee: 'Alex Turner',
+      assignee: 'Arun Shankar',
       cost: 35000,
       status: ActivityStatus.COMPLETED,
       startDate: new Date('2025-01-15'),
@@ -248,7 +248,7 @@ async function main() {
     data: {
       channelId: chanA3_2.id,
       name: 'Onboarding Email Optimization',
-      assignee: 'Nina Patel',
+      assignee: 'Priya Lakshmi',
       cost: 18000,
       status: ActivityStatus.PENDING,
       startDate: new Date('2025-07-01'),
@@ -259,22 +259,22 @@ async function main() {
   // Leads for User A activities
   const leadsA = await Promise.all([
     // Enterprise leads (high value, various stages)
-    prisma.lead.create({ data: { activityId: actA1_1_1.id, company: 'Apex Financial Corp', contactName: 'Sarah Mitchell', value: 420000, stage: LeadStage.CLOSURE, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA1_1_1.id, company: 'GlobalTech Systems', contactName: 'Robert Chang', value: 380000, stage: LeadStage.EVALUATION, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA1_1_1.id, company: 'Meridian Healthcare', contactName: 'Dr. James Okonkwo', value: 295000, stage: LeadStage.SALES, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA1_1_2.id, company: 'Vantage Logistics', contactName: 'Amanda Foster', value: 185000, stage: LeadStage.CHEMISTRY, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA1_1_2.id, company: 'NexGen Manufacturing', contactName: 'Carlos Rivera', value: 240000, stage: LeadStage.EVALUATION, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA1_2_1.id, company: 'Pinnacle Insurance Group', contactName: 'Jennifer Walsh', value: 520000, stage: LeadStage.CLOSURE, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA1_2_1.id, company: 'Stellar Energy Corp', contactName: 'Michael Torres', value: 310000, stage: LeadStage.SALES, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA1_2_1.id, company: 'Quantum Retail Holdings', contactName: 'Lisa Park', value: 175000, stage: LeadStage.DRAFT, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA1_2_2.id, company: 'TechVision AI', contactName: 'Ryan Blackwood', value: 88000, stage: LeadStage.CHEMISTRY, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA1_3_1.id, company: 'Cascade Biotech', contactName: 'Dr. Amelia Santos', value: 430000, stage: LeadStage.EVALUATION, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA2_1_1.id, company: 'AsiaPac Holdings', contactName: 'Kevin Tan', value: 280000, stage: LeadStage.SALES, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA2_1_1.id, company: 'Dragon Fintech', contactName: 'Mei Liang', value: 195000, stage: LeadStage.CHEMISTRY, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA2_2_1.id, company: 'Pacific Commerce Co', contactName: 'Thomas Nguyen', value: 145000, stage: LeadStage.DRAFT, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA3_1_1.id, company: 'StartSmart Inc', contactName: 'Zoe Harrison', value: 24000, stage: LeadStage.CLOSURE, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA3_1_1.id, company: 'CodeBase Labs', contactName: 'Dev Patel', value: 18000, stage: LeadStage.SALES, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actA3_2_1.id, company: 'PixelFlow Agency', contactName: 'Emma Wilson', value: 12000, stage: LeadStage.EVALUATION, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA1_1_1.id, company: 'Zoho Corporation', contactName: 'Sridhar Kumar', value: 420000, stage: LeadStage.CLOSURE, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA1_1_1.id, company: 'Tata Consultancy Services', contactName: 'Ramesh Raju', value: 380000, stage: LeadStage.EVALUATION, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA1_1_1.id, company: 'Infosys Limited', contactName: 'Dr. Mohan Krishnan', value: 295000, stage: LeadStage.SALES, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA1_1_2.id, company: 'Wipro Technologies', contactName: 'Anand Ravi', value: 185000, stage: LeadStage.CHEMISTRY, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA1_1_2.id, company: 'HCL Technologies', contactName: 'Vijay Balaji', value: 240000, stage: LeadStage.EVALUATION, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA1_2_1.id, company: 'Tech Mahindra', contactName: 'Suresh Venkatesh', value: 520000, stage: LeadStage.CLOSURE, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA1_2_1.id, company: 'Larsen & Toubro Infotech', contactName: 'Kiran Murugan', value: 310000, stage: LeadStage.SALES, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA1_2_1.id, company: 'Mphasis India', contactName: 'Deepa Sundar', value: 175000, stage: LeadStage.DRAFT, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA1_2_2.id, company: 'Freshworks Inc', contactName: 'Rajan Iyer', value: 88000, stage: LeadStage.CHEMISTRY, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA1_3_1.id, company: 'Mindtree Solutions', contactName: 'Dr. Geetha Nair', value: 430000, stage: LeadStage.EVALUATION, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA2_1_1.id, company: 'Legend Saravana Stores', contactName: 'Saravanan Kumar', value: 280000, stage: LeadStage.SALES, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA2_1_1.id, company: 'Pothys Silks', contactName: 'Pothy Murugan', value: 195000, stage: LeadStage.CHEMISTRY, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA2_2_1.id, company: 'The Chennai Silks', contactName: 'Thangam Krishnan', value: 145000, stage: LeadStage.DRAFT, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA3_1_1.id, company: 'Ramco Systems', contactName: 'Ramachandran Ravi', value: 24000, stage: LeadStage.CLOSURE, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA3_1_1.id, company: 'Subex Limited', contactName: 'Subramanian Pillai', value: 18000, stage: LeadStage.SALES, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actA3_2_1.id, company: 'Hexaware Technologies', contactName: 'Uma Shankar', value: 12000, stage: LeadStage.EVALUATION, status: 'open' } }),
   ]);
 
   // Orders for User A
@@ -293,7 +293,7 @@ async function main() {
   const userB = await prisma.user.create({
     data: {
       name: 'Vithya',
-      email: 'diana@steadystate.co',
+      email: 'vithya@steadystate.co',
     },
   });
 
@@ -366,7 +366,7 @@ async function main() {
     data: {
       channelId: chanB1_1.id,
       name: 'Quarterly Business Reviews',
-      assignee: 'Tom Bradley',
+      assignee: 'Balaji Krishnaswamy',
       cost: 45000,
       status: ActivityStatus.ACTIVE,
       startDate: new Date('2025-01-15'),
@@ -378,7 +378,7 @@ async function main() {
     data: {
       channelId: chanB1_1.id,
       name: 'Upsell Health Score Program',
-      assignee: 'Rachel Kim',
+      assignee: 'Kavitha Rajan',
       cost: 28000,
       status: ActivityStatus.ACTIVE,
       startDate: new Date('2025-04-01'),
@@ -390,7 +390,7 @@ async function main() {
     data: {
       channelId: chanB1_2.id,
       name: 'Re-engagement Campaign',
-      assignee: 'Mike Santos',
+      assignee: 'Manoj Shanmugam',
       cost: 22000,
       status: ActivityStatus.COMPLETED,
       startDate: new Date('2025-02-01'),
@@ -402,7 +402,7 @@ async function main() {
     data: {
       channelId: chanB2_1.id,
       name: 'Thought Leadership Blog Series',
-      assignee: 'Sarah Lee',
+      assignee: 'Saranya Gopal',
       cost: 32000,
       status: ActivityStatus.ACTIVE,
       startDate: new Date('2025-03-01'),
@@ -414,7 +414,7 @@ async function main() {
     data: {
       channelId: chanB2_2.id,
       name: 'Cold Outbound - Fintech Vertical',
-      assignee: 'Jake Martinez',
+      assignee: 'Harish Natarajan',
       cost: 42000,
       status: ActivityStatus.ACTIVE,
       startDate: new Date('2025-03-15'),
@@ -426,7 +426,7 @@ async function main() {
     data: {
       channelId: chanB2_2.id,
       name: 'Referral Program Outreach',
-      assignee: 'Amy Chen',
+      assignee: 'Meena Sundaram',
       cost: 18000,
       status: ActivityStatus.PENDING,
       startDate: new Date('2025-08-01'),
@@ -436,16 +436,16 @@ async function main() {
 
   // Leads for User B
   const leadsB = await Promise.all([
-    prisma.lead.create({ data: { activityId: actB1_1_1.id, company: 'Brightline Software', contactName: 'Paul Newton', value: 84000, stage: LeadStage.CLOSURE, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actB1_1_1.id, company: 'Horizon Analytics', contactName: 'Claire Dubois', value: 62000, stage: LeadStage.EVALUATION, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actB1_1_2.id, company: 'ClearPath Solutions', contactName: 'Nathan Reed', value: 48000, stage: LeadStage.SALES, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actB1_1_2.id, company: 'BlueRidge Capital', contactName: 'Monica Shaw', value: 92000, stage: LeadStage.EVALUATION, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actB1_2_1.id, company: 'Summit Operations', contactName: 'Derek Walsh', value: 35000, stage: LeadStage.CHEMISTRY, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actB2_1_1.id, company: 'TechEdge Group', contactName: 'Lily Jordan', value: 56000, stage: LeadStage.SALES, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actB2_1_1.id, company: 'Nexus Consulting', contactName: 'Brian Foster', value: 38000, stage: LeadStage.DRAFT, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actB2_2_1.id, company: 'AlphaFin Technologies', contactName: 'Isabella Ross', value: 74000, stage: LeadStage.CLOSURE, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actB2_2_1.id, company: 'Verdant Systems', contactName: 'Oscar Webb', value: 44000, stage: LeadStage.CHEMISTRY, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actB2_2_2.id, company: 'CoreLogic Inc', contactName: 'Hannah Blake', value: 28000, stage: LeadStage.DRAFT, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actB1_1_1.id, company: 'Saravana Bhavan Group', contactName: 'Saravana Mohan', value: 84000, stage: LeadStage.CLOSURE, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actB1_1_1.id, company: 'Nilgiris Supermarket', contactName: 'Chandrasekhar Ravi', value: 62000, stage: LeadStage.EVALUATION, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actB1_1_2.id, company: 'RmKV Silks', contactName: 'Ramasamy Kumar', value: 48000, stage: LeadStage.SALES, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actB1_1_2.id, company: 'Kumaran Silks', contactName: 'Krishnamurthy Raja', value: 92000, stage: LeadStage.EVALUATION, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actB1_2_1.id, company: 'TANSI Enterprises', contactName: 'Devarajan Pillai', value: 35000, stage: LeadStage.CHEMISTRY, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actB2_1_1.id, company: 'Sundaram Finance', contactName: 'Lakshmi Sundaram', value: 56000, stage: LeadStage.SALES, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actB2_1_1.id, company: 'Murugappa Group', contactName: 'Velu Murugappan', value: 38000, stage: LeadStage.DRAFT, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actB2_2_1.id, company: 'Shriram Transport Finance', contactName: 'Gopal Krishnan', value: 74000, stage: LeadStage.CLOSURE, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actB2_2_1.id, company: 'TVS Group', contactName: 'Venkataraman Srinivasan', value: 44000, stage: LeadStage.CHEMISTRY, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actB2_2_2.id, company: 'Tube Investments of India', contactName: 'Hariharan Nair', value: 28000, stage: LeadStage.DRAFT, status: 'open' } }),
   ]);
 
   // Orders for User B
@@ -461,7 +461,7 @@ async function main() {
   const userC = await prisma.user.create({
     data: {
       name: 'Bredrick',
-      email: 'alex@earlystage.dev',
+      email: 'bredrick@earlystage.dev',
     },
   });
 
@@ -526,7 +526,7 @@ async function main() {
     data: {
       channelId: chanC1_2.id,
       name: 'Developer Community Outreach',
-      assignee: 'Jamie Wu',
+      assignee: 'Dinesh Babu',
       cost: 4500,
       status: ActivityStatus.PENDING,
       startDate: new Date('2025-08-01'),
@@ -536,10 +536,10 @@ async function main() {
 
   // Leads for User C
   const leadsC = await Promise.all([
-    prisma.lead.create({ data: { activityId: actC1_1_1.id, company: 'SparkBuild Studio', contactName: 'Lena Kovacs', value: 8400, stage: LeadStage.SALES, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actC1_1_1.id, company: 'NanoSoft Labs', contactName: 'Ben Adler', value: 6200, stage: LeadStage.CHEMISTRY, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actC1_2_1.id, company: 'Pixel Hopper', contactName: 'Cathy Moon', value: 3600, stage: LeadStage.CLOSURE, status: 'open' } }),
-    prisma.lead.create({ data: { activityId: actC1_2_2.id, company: 'DevShip.io', contactName: 'Sam Ruiz', value: 4800, stage: LeadStage.DRAFT, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actC1_1_1.id, company: 'Cognizant Technology', contactName: 'Senthil Kumar', value: 8400, stage: LeadStage.SALES, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actC1_1_1.id, company: 'Tata Elxsi', contactName: 'Bala Krishna', value: 6200, stage: LeadStage.CHEMISTRY, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actC1_2_1.id, company: 'Sasken Technologies', contactName: 'Chitra Devi', value: 3600, stage: LeadStage.CLOSURE, status: 'open' } }),
+    prisma.lead.create({ data: { activityId: actC1_2_2.id, company: 'Sonata Software', contactName: 'Selvam Rajan', value: 4800, stage: LeadStage.DRAFT, status: 'open' } }),
   ]);
 
   // Orders for User C
