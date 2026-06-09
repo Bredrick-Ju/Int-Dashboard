@@ -136,6 +136,12 @@ worklyft-dashboard/
 
 ---
 
+## Testing Info
+
+> **Tip:** Keep two browser windows open side-by-side: one on the `/dashboard` overview, and one on the `/admin` panel. When you submit inputs on the admin panel, they instantly sync on the dashboard!
+
+---
+
 ## Screenshots
 
 ### Dashboard
