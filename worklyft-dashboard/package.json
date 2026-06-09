@@ -15,10 +15,7 @@
     "build": "npm run build --workspace=shared && npm run build --workspace=backend && npm run build --workspace=frontend",
     "db:migrate": "npm run prisma:migrate --workspace=backend",
     "db:seed": "npm run prisma:seed --workspace=backend",
-    "db:studio": "npm run prisma:studio --workspace=backend",
-    "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down",
-    "docker:logs": "docker-compose logs -f"
+    "db:studio": "npm run prisma:studio --workspace=backend"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

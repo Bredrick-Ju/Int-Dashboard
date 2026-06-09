@@ -13,7 +13,6 @@ Built with **Next.js 15**, **NestJS**, **Prisma**, **PostgreSQL**, **Socket.io**
 - 📊 **Premium Analytics Dashboard:** Interactive data visualizations (revenue trends, budget utilization, channel performance, activity distribution) built with Recharts, complete with Framer Motion transitions.
 - 🗂️ **Drag-and-Drop Lead Kanban:** Move client leads through pipeline stages (Draft → Chemistry → Sales → Evaluation → Closure) with optimistic UI updates and backend mutations using `@dnd-kit`.
 - ⚙️ **Admin Simulation Console:** Dedicated testing sandbox to generate mock contract orders, toggle campaign activities, and advance lead stages to observe real-time room updates.
-- 🐳 **Dockerised Deployment:** Fully containerised environment utilizing Docker Compose to boot PostgreSQL, NestJS backend, and Next.js frontend in one command.
 
 ---
 
@@ -42,7 +41,6 @@ worklyft-dashboard/
 │   │   ├── providers/        # React Query & WebSocket event providers
 │   │   └── store/            # Zustand app state store
 ├── shared/                   # Shared TypeScript interfaces & DTO package
-├── docker-compose.yml        # Orchestrates Postgres, Backend, and Frontend containers
 └── package.json              # Monorepo workspaces configuration
 ```
 
@@ -53,43 +51,11 @@ worklyft-dashboard/
 ### Prerequisites
 - Node.js (v20 or higher)
 - npm (v10 or higher)
-- Docker & Docker Compose (optional, but highly recommended)
-
-### Quick Start with Docker (Recommended)
-
-1. Clone the repository and navigate to the project directory:
-   ```bash
-   cd worklyft-dashboard
-   ```
-
-2. Start all services using Docker Compose:
-   ```bash
-   npm run docker:up
-   ```
-   This will spin up:
-   - **PostgreSQL** database on port `5432`
-   - **NestJS backend** on port `4000` (automatically runs database migrations and seeds initial data)
-   - **Next.js frontend** on port `3000`
-
-3. Access the dashboard:
-   - Frontend: [http://localhost:3000](http://localhost:3000)
-   - Backend API: [http://localhost:4000/api/v1](http://localhost:4000/api/v1)
-
-4. To view logs:
-   ```bash
-   npm run docker:logs
-   ```
-
-5. To shut down services:
-   ```bash
-   npm run docker:down
-   ```
+- PostgreSQL (v14 or higher) running locally
 
 ---
 
-### Local Development (Without Docker)
-
-If you prefer running the services natively on your host machine, follow these steps:
+### Quick Start
 
 #### 1. Setup the Database
 Ensure you have a PostgreSQL database running. Create a `.env` file inside the `backend/` directory and configure your connection string:
