@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   description:
     'Enterprise-grade real-time SaaS dashboard for revenue operations — strategy, channel, activity, lead, and order management with live WebSocket updates.',
   keywords: ['revenue operations', 'sales dashboard', 'real-time analytics', 'SaaS', 'CRM'],
+  icons: {
+    icon: '/assets/logo.jpeg',
+    shortcut: '/assets/logo.jpeg',
+    apple: '/assets/logo.jpeg',
+  },
   openGraph: {
     title: 'Worklyft Revenue Ops Dashboard',
     description: 'Real-time SaaS revenue operations dashboard',
@@ -24,6 +29,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="dark">
       <head>
+        <link rel="icon" href="/assets/logo.jpeg" type="image/jpeg" />
+        <link rel="shortcut icon" href="/assets/logo.jpeg" type="image/jpeg" />
+        <link rel="apple-touch-icon" href="/assets/logo.jpeg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>

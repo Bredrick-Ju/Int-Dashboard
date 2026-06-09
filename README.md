@@ -140,6 +140,8 @@ worklyft-dashboard/
 
 > **Tip:** Keep two browser windows open side-by-side: one on the `/dashboard` overview, and one on the `/admin` panel. When you submit inputs on the admin panel, they instantly sync on the dashboard!
 
+> **API Docs:** You can also access the **Swagger UI** at [http://localhost:4000/api/docs](http://localhost:4000/api/docs) to explore and verify all available API endpoints interactively.
+
 ---
 
 ## Screenshots
@@ -155,6 +157,9 @@ worklyft-dashboard/
 
 ### Admin
 ![Admin](./screenshots/admin.png)
+
+### Swagger UI
+![Swagger UI](./screenshots/swagger.png)
 
 ---
 
