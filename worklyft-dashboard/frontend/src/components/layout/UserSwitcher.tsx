@@ -10,7 +10,7 @@ import { ChevronDown, Rocket, TrendingUp, Sprout, Check } from 'lucide-react';
 import { useState } from 'react';
 import { useAppStore, type AppUser } from '@/store/useAppStore';
 import { useUsers } from '@/hooks/useUsers';
-import { leaveUserRoom, joinUserRoom } from '@/lib/socket';
+
 import { cn } from '@/lib/utils';
 
 const PERSONA_META = {
@@ -47,10 +47,6 @@ export function UserSwitcher() {
     if (user.id === activeUser?.id) { setOpen(false); return; }
     setOpen(false);
     setIsTransitioning(true);
-
-    // WebSocket room switch
-    if (activeUser) leaveUserRoom(activeUser.id);
-    joinUserRoom(user.id);
 
     // Invalidate dashboard cache for new user
     queryClient.invalidateQueries({ queryKey: ['dashboard', user.id] });
