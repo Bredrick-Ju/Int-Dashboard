@@ -136,4 +136,20 @@ worklyft-dashboard/
 
 ---
 
+## Screenshots
+
+### Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### Analytics
+![Analytics](./screenshots/analytics.png)
+
+### Revenue
+![Revenue](./screenshots/revenue.png)
+
+### Admin
+![Admin](./screenshots/admin.png)
+
+---
+
 ## Developed by Bredrick
