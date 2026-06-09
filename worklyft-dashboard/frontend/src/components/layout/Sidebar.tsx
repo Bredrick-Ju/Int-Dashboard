@@ -7,12 +7,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import {
   LayoutDashboard,
   BarChart3,
   IndianRupee,
   Settings2,
-  Zap,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -31,15 +31,18 @@ export function Sidebar() {
       aria-label="Sidebar navigation"
       className="flex flex-col h-full w-60 border-r border-border bg-sidebar px-3 py-4"
     >
-      {/* Logo */}
-      <div className="flex items-center gap-2.5 px-2 mb-8">
-        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-500/30">
-          <Zap className="w-4 h-4 text-indigo-400" />
+      {/* Logo – centered, bigger, no text */}
+      <div className="flex justify-center px-2 mb-8">
+        <div className="flex items-center justify-center w-16 h-16 rounded-full overflow-hidden border-2 border-cyan-500/50 shadow-lg shadow-cyan-500/30 shrink-0">
+          <Image
+            src="/assets/logo.jpeg"
+            alt="Worklyft logo"
+            width={64}
+            height={64}
+            className="object-cover w-full h-full"
+            priority
+          />
         </div>
-        <span className="text-sm font-semibold text-foreground tracking-tight">
-          Worklyft
-        </span>
-
       </div>
 
       {/* Navigation */}
