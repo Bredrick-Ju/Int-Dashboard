@@ -4,7 +4,7 @@
 // components/dashboard/LeadKanban.tsx — Drag-and-drop Kanban board
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   DndContext, DragEndEvent, DragOverEvent, DragStartEvent,
@@ -123,8 +123,12 @@ export function LeadKanban({ leads: initialLeads }: Props) {
   const [leads, setLeads] = useState(initialLeads);
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  // Sync when initialLeads prop changes (user switch)
-  useState(() => { setLeads(initialLeads); });
+  // Sync local state whenever the prop changes (e.g. user switch)
+  useEffect(() => {
+    if (!activeId) {
+      setLeads(initialLeads);
+    }
+  }, [initialLeads, activeId]);
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }));
 
@@ -136,14 +140,9 @@ export function LeadKanban({ leads: initialLeads }: Props) {
     },
     onError: () => {
       toast.error('Failed to update lead stage');
-      setLeads(initialLeads); // revert
+      setLeads(initialLeads); // revert optimistic update
     },
   });
-
-  // Update when prop changes
-  if (leads !== initialLeads && !activeId) {
-    setLeads(initialLeads);
-  }
 
   const leadById = (id: string) => leads.find((l) => l.id === id);
 
