@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// providers/SocketProvider.tsx — Socket.io Context + Real-time event handlers
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { createContext, useContext, useEffect, useRef } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';

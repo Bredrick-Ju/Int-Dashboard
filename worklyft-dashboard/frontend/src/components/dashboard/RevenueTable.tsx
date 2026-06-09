@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// components/dashboard/RevenueTable.tsx
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { useState, useMemo } from 'react';
 import { Search, ArrowUpDown, ChevronDown, Filter, IndianRupee } from 'lucide-react';
 import { formatCurrency, formatDate } from '@/lib/formatters';
@@ -24,12 +19,10 @@ export function RevenueTable({ orders, leads }: RevenueTableProps) {
   const [sortField, setSortField] = useState<SortField>('deliveryDate');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
 
-  // Create lead lookup map
   const leadMap = useMemo(() => {
     return new Map(leads.map((l) => [l.id, l]));
   }, [leads]);
 
-  // Filter and sort orders
   const processedOrders = useMemo(() => {
     return orders
       .filter((order) => {

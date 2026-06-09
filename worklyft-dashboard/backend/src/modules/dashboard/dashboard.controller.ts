@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// dashboard.controller.ts
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 import { DashboardService } from './dashboard.service';

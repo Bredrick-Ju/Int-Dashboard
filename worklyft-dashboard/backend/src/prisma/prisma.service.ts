@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// prisma.service.ts — Prisma Client Service
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 

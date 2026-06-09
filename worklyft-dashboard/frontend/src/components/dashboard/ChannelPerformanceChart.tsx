@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// components/dashboard/ChannelPerformanceChart.tsx — Horizontal bar chart
-// ─────────────────────────────────────────────────────────────────────────────
-
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer,

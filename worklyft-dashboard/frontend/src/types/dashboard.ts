@@ -1,9 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// types/index.ts — Frontend type re-exports
-// ─────────────────────────────────────────────────────────────────────────────
-
-// ─── Dashboard types (inline to avoid shared package build step) ──────────────
-
 export interface User {
   id: string;
   name: string;

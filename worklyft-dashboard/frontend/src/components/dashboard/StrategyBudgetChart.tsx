@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// components/dashboard/StrategyBudgetChart.tsx — Grouped bar chart
-// ─────────────────────────────────────────────────────────────────────────────
-
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Cell, LabelList,

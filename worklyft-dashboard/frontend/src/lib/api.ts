@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// lib/api.ts — Axios API client
-// ─────────────────────────────────────────────────────────────────────────────
-
 import axios from 'axios';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
@@ -12,7 +8,6 @@ export const apiClient = axios.create({
   timeout: 15000,
 });
 
-// Response interceptor — unwrap { success, data } envelope
 apiClient.interceptors.response.use(
   (response) => {
     if (response.data && 'data' in response.data) {
@@ -22,8 +17,6 @@ apiClient.interceptors.response.use(
   },
   (error) => Promise.reject(error),
 );
-
-// ─── API Functions ────────────────────────────────────────────────────────────
 
 export const api = {
   users: {

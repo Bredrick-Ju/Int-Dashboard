@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// strategies.controller.ts
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 import { StrategiesService } from './strategies.service';

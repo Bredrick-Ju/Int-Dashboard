@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// components/dashboard/KpiCards.tsx — KPI cards grid
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { IndianRupee, ShoppingCart, Users, Target } from 'lucide-react';
 import { KpiCard } from './KpiCard';
 import { formatCurrency, formatNumber } from '@/lib/formatters';

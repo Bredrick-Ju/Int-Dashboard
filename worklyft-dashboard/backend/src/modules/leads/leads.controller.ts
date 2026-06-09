@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// leads.controller.ts
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Controller, Get, Param, Patch, Body } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 import { LeadsService } from './leads.service';

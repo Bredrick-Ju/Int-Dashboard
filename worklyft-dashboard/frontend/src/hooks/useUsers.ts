@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// hooks/useUsers.ts — Fetch and bootstrap user list
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { api } from '@/lib/api';

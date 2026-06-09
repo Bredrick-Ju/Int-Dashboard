@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// events.gateway.ts — Socket.io WebSocket Gateway
-// ─────────────────────────────────────────────────────────────────────────────
-
 import {
   WebSocketGateway,
   WebSocketServer,
@@ -42,15 +38,12 @@ export class EventsGateway
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
-  // ─── Room Management ───────────────────────────────────────────────────────
-
   @SubscribeMessage('join_room')
   handleJoinRoom(
     @MessageBody() userId: string,
     @ConnectedSocket() client: Socket,
   ) {
     const room = `user:${userId}`;
-    // Leave all previous user rooms before joining new one
     client.rooms.forEach((r) => {
       if (r.startsWith('user:') && r !== room) {
         client.leave(r);
@@ -72,8 +65,6 @@ export class EventsGateway
     this.logger.log(`Client ${client.id} left room: ${room}`);
     return { event: 'room_left', room };
   }
-
-  // ─── Emit Helpers (called by services) ───────────────────────────────────
 
   emitLeadUpdated(userId: string, payload: unknown) {
     this.server.to(`user:${userId}`).emit('lead.updated', payload);

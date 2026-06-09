@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// hooks/useDashboard.ts — TanStack Query hook for dashboard data
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { useAppStore } from '@/store/useAppStore';

@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// components/dashboard/RevenueTrendChart.tsx — Area chart
-// ─────────────────────────────────────────────────────────────────────────────
-
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Legend,

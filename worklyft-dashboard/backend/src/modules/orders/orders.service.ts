@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// orders.service.ts
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { EventsGateway } from '../../gateways/events.gateway';
@@ -33,7 +29,6 @@ export class OrdersService {
   }
 
   async create(dto: CreateOrderDto) {
-    // Validate lead exists and fetch userId via relation chain
     const lead = await this.prisma.lead.findUnique({
       where: { id: dto.leadId },
       include: {
@@ -64,7 +59,6 @@ export class OrdersService {
 
     const userId = lead.activity.channel.strategy.userId;
 
-    // Emit WebSocket events
     this.events.emitOrderCreated(userId, { orderId: order.id, userId, order });
     this.events.emitDashboardUpdated(userId);
 

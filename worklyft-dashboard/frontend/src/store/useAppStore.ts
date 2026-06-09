@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// store/useAppStore.ts — Global Zustand App Store
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 

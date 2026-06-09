@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// components/dashboard/ActivityStatusDonut.tsx — Donut chart
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import type { ActivityStatusItem } from '@/types';
 

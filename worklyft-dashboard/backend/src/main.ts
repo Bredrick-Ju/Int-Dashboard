@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// main.ts — NestJS Application Entry Point
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -12,17 +8,14 @@ async function bootstrap() {
     logger: ['error', 'warn', 'log', 'verbose'],
   });
 
-  // CORS — allow frontend origin
   app.enableCors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
   });
 
-  // Global prefix
   app.setGlobalPrefix('api/v1');
 
-  // Global validation pipe
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -32,7 +25,6 @@ async function bootstrap() {
     }),
   );
 
-  // Swagger documentation
   const config = new DocumentBuilder()
     .setTitle('Worklyft API')
     .setDescription('Real-Time Revenue Operations Dashboard API')

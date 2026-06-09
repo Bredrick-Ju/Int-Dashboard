@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// transform.interceptor.ts — Global Response Transform Interceptor
-// ─────────────────────────────────────────────────────────────────────────────
-
 import {
   Injectable,
   NestInterceptor,

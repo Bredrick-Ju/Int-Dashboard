@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// users.controller.ts
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { UsersService } from './users.service';

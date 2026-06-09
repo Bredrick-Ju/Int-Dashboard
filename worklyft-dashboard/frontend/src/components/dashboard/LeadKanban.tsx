@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// components/dashboard/LeadKanban.tsx — Drag-and-drop Kanban board
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -27,8 +22,6 @@ const STAGES: { key: LeadStage; label: string; color: string; bg: string }[] = [
   { key: 'EVALUATION', label: 'Evaluation', color: 'text-amber-400',  bg: 'bg-amber-500/10' },
   { key: 'CLOSURE',    label: 'Closure',    color: 'text-emerald-400',bg: 'bg-emerald-500/10' },
 ];
-
-// ─── Lead Card ────────────────────────────────────────────────────────────────
 
 function LeadCard({ lead, isDragging = false }: { lead: Lead; isDragging?: boolean }) {
   const stage = STAGES.find((s) => s.key === lead.stage)!;
@@ -65,8 +58,6 @@ function LeadCard({ lead, isDragging = false }: { lead: Lead; isDragging?: boole
     </div>
   );
 }
-
-// ─── Column ───────────────────────────────────────────────────────────────────
 
 function KanbanColumn({ stage, leads }: { stage: typeof STAGES[0]; leads: Lead[] }) {
   const totalValue = leads.reduce((s, l) => s + l.value, 0);
@@ -113,8 +104,6 @@ function KanbanColumn({ stage, leads }: { stage: typeof STAGES[0]; leads: Lead[]
   );
 }
 
-// ─── Main Kanban ──────────────────────────────────────────────────────────────
-
 interface Props { leads: Lead[] }
 
 export function LeadKanban({ leads: initialLeads }: Props) {
@@ -123,7 +112,6 @@ export function LeadKanban({ leads: initialLeads }: Props) {
   const [leads, setLeads] = useState(initialLeads);
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  // Sync local state whenever the prop changes (e.g. user switch)
   useEffect(() => {
     if (!activeId) {
       setLeads(initialLeads);
@@ -140,7 +128,7 @@ export function LeadKanban({ leads: initialLeads }: Props) {
     },
     onError: () => {
       toast.error('Failed to update lead stage');
-      setLeads(initialLeads); // revert optimistic update
+      setLeads(initialLeads);
     },
   });
 
@@ -155,7 +143,6 @@ export function LeadKanban({ leads: initialLeads }: Props) {
     const { active, over } = event;
     if (!over) return;
 
-    // Determine target stage from over container
     const overId = String(over.id);
     const targetStage = STAGES.find((s) => s.key === overId)?.key
       ?? leads.find((l) => l.id === overId)?.stage;
@@ -165,7 +152,6 @@ export function LeadKanban({ leads: initialLeads }: Props) {
     const lead = leadById(String(active.id));
     if (!lead || lead.stage === targetStage) return;
 
-    // Optimistic update
     setLeads((prev) =>
       prev.map((l) => (l.id === lead.id ? { ...l, stage: targetStage } : l)),
     );

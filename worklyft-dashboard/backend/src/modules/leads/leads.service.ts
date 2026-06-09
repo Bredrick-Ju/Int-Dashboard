@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// leads.service.ts
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { EventsGateway } from '../../gateways/events.gateway';
@@ -59,7 +55,6 @@ export class LeadsService {
 
     const userId = existing.activity.channel.strategy.userId;
 
-    // Emit WebSocket events
     this.events.emitLeadUpdated(userId, {
       leadId: id,
       userId,

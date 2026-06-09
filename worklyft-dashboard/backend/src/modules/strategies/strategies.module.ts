@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// strategies.module.ts
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Module } from '@nestjs/common';
 import { StrategiesController } from './strategies.controller';
 import { StrategiesService } from './strategies.service';

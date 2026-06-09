@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// create-order.dto.ts
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { IsString, IsNumber, IsEnum, IsDateString, Min } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { DeliveryStatus } from '@prisma/client';

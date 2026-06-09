@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// lib/formatters.ts — Currency, number, date formatters
-// ─────────────────────────────────────────────────────────────────────────────
-
 export function formatCurrency(value: number, compact = false): string {
   if (compact) {
     if (value >= 1_00_00_000) return `₹${(value / 1_00_00_000).toFixed(1)}Cr`;

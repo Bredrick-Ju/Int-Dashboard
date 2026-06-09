@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// activities.controller.ts
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Controller, Get, Param, Patch, Body } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 import { ActivitiesService } from './activities.service';

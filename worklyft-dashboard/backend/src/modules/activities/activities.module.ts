@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// activities.module.ts
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Module } from '@nestjs/common';
 import { ActivitiesController } from './activities.controller';
 import { ActivitiesService } from './activities.service';

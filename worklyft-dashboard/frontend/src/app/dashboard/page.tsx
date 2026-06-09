@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// app/dashboard/page.tsx — Main Dashboard Overview
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { KpiCards } from '@/components/dashboard/KpiCards';
 import { RevenueTrendChart } from '@/components/dashboard/RevenueTrendChart';

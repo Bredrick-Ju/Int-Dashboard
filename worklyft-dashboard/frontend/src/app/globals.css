@@ -4,10 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   CSS Design Tokens — Dark SaaS Theme (Linear / Vercel / Raycast inspired)
-   ───────────────────────────────────────────────────────────────────────────── */
-
 @layer base {
   :root {
     --background: 224 71% 4%;

@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// Prisma Schema — Worklyft Real-Time Revenue Operations Dashboard
-// ─────────────────────────────────────────────────────────────────────────────
-
 generator client {
   provider = "prisma-client-js"
 }

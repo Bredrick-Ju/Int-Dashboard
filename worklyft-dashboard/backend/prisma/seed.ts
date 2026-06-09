@@ -1,12 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// Prisma Seed — Worklyft Real-Time Revenue Operations Dashboard
-// ─────────────────────────────────────────────────────────────────────────────
-// Three distinct user personas:
-//   User A — Aggressive Growth: high budget, high volume, high revenue
-//   User B — Steady State: balanced pipeline, moderate revenue
-//   User C — Early Stage: small budget, few leads, minimal orders
-// ─────────────────────────────────────────────────────────────────────────────
-
 import {
   PrismaClient,
   ActivityStatus,
@@ -19,15 +10,12 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Seeding Worklyft database...');
 
-  // Clean existing data
   await prisma.order.deleteMany();
   await prisma.lead.deleteMany();
   await prisma.activity.deleteMany();
   await prisma.channel.deleteMany();
   await prisma.strategy.deleteMany();
   await prisma.user.deleteMany();
-
-  // ─── User A: Aggressive Growth ───────────────────────────────────────────
 
   const userA = await prisma.user.create({
     data: {
@@ -75,7 +63,6 @@ async function main() {
     },
   });
 
-  // Channels for Strategy A1
   const chanA1_1 = await prisma.channel.create({
     data: {
       strategyId: stratA1.id,
@@ -103,7 +90,6 @@ async function main() {
     },
   });
 
-  // Channels for Strategy A2
   const chanA2_1 = await prisma.channel.create({
     data: {
       strategyId: stratA2.id,
@@ -122,7 +108,6 @@ async function main() {
     },
   });
 
-  // Channels for Strategy A3
   const chanA3_1 = await prisma.channel.create({
     data: {
       strategyId: stratA3.id,
@@ -141,7 +126,6 @@ async function main() {
     },
   });
 
-  // Activities for Channel A1_1
   const actA1_1_1 = await prisma.activity.create({
     data: {
       channelId: chanA1_1.id,
@@ -166,7 +150,6 @@ async function main() {
     },
   });
 
-  // Activities for Channel A1_2
   const actA1_2_1 = await prisma.activity.create({
     data: {
       channelId: chanA1_2.id,
@@ -191,7 +174,6 @@ async function main() {
     },
   });
 
-  // Activities for Channel A1_3
   const actA1_3_1 = await prisma.activity.create({
     data: {
       channelId: chanA1_3.id,
@@ -204,7 +186,6 @@ async function main() {
     },
   });
 
-  // Activities for Channel A2_1
   const actA2_1_1 = await prisma.activity.create({
     data: {
       channelId: chanA2_1.id,
@@ -217,7 +198,6 @@ async function main() {
     },
   });
 
-  // Activities for Channel A2_2
   const actA2_2_1 = await prisma.activity.create({
     data: {
       channelId: chanA2_2.id,
@@ -230,7 +210,6 @@ async function main() {
     },
   });
 
-  // Activities for Channel A3_1
   const actA3_1_1 = await prisma.activity.create({
     data: {
       channelId: chanA3_1.id,
@@ -243,7 +222,6 @@ async function main() {
     },
   });
 
-  // Activities for Channel A3_2
   const actA3_2_1 = await prisma.activity.create({
     data: {
       channelId: chanA3_2.id,
@@ -256,9 +234,7 @@ async function main() {
     },
   });
 
-  // Leads for User A activities
   const leadsA = await Promise.all([
-    // Enterprise leads (high value, various stages)
     prisma.lead.create({ data: { activityId: actA1_1_1.id, company: 'Zoho Corporation', contactName: 'Sridhar Kumar', value: 420000, stage: LeadStage.CLOSURE, status: 'open' } }),
     prisma.lead.create({ data: { activityId: actA1_1_1.id, company: 'Tata Consultancy Services', contactName: 'Ramesh Raju', value: 380000, stage: LeadStage.EVALUATION, status: 'open' } }),
     prisma.lead.create({ data: { activityId: actA1_1_1.id, company: 'Infosys Limited', contactName: 'Dr. Mohan Krishnan', value: 295000, stage: LeadStage.SALES, status: 'open' } }),
@@ -277,7 +253,6 @@ async function main() {
     prisma.lead.create({ data: { activityId: actA3_2_1.id, company: 'Hexaware Technologies', contactName: 'Uma Shankar', value: 12000, stage: LeadStage.EVALUATION, status: 'open' } }),
   ]);
 
-  // Orders for User A
   await Promise.all([
     prisma.order.create({ data: { leadId: leadsA[0].id, value: 420000, paidAmount: 420000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2026-06-05') } }),
     prisma.order.create({ data: { leadId: leadsA[5].id, value: 520000, paidAmount: 260000, deliveryStatus: DeliveryStatus.IN_PROGRESS, deliveryDate: new Date('2026-05-20') } }),
@@ -288,7 +263,6 @@ async function main() {
     prisma.order.create({ data: { leadId: leadsA[10].id, value: 280000, paidAmount: 280000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2026-05-08') } }),
   ]);
 
-  // ─── User B: Steady State ────────────────────────────────────────────────
 
   const userB = await prisma.user.create({
     data: {
@@ -323,7 +297,6 @@ async function main() {
     },
   });
 
-  // Channels for B1
   const chanB1_1 = await prisma.channel.create({
     data: {
       strategyId: stratB1.id,
@@ -342,7 +315,6 @@ async function main() {
     },
   });
 
-  // Channels for B2
   const chanB2_1 = await prisma.channel.create({
     data: {
       strategyId: stratB2.id,
@@ -361,7 +333,6 @@ async function main() {
     },
   });
 
-  // Activities for B channels
   const actB1_1_1 = await prisma.activity.create({
     data: {
       channelId: chanB1_1.id,
@@ -434,7 +405,6 @@ async function main() {
     },
   });
 
-  // Leads for User B
   const leadsB = await Promise.all([
     prisma.lead.create({ data: { activityId: actB1_1_1.id, company: 'Saravana Bhavan Group', contactName: 'Saravana Mohan', value: 84000, stage: LeadStage.CLOSURE, status: 'open' } }),
     prisma.lead.create({ data: { activityId: actB1_1_1.id, company: 'Nilgiris Supermarket', contactName: 'Chandrasekhar Ravi', value: 62000, stage: LeadStage.EVALUATION, status: 'open' } }),
@@ -448,15 +418,12 @@ async function main() {
     prisma.lead.create({ data: { activityId: actB2_2_2.id, company: 'Tube Investments of India', contactName: 'Hariharan Nair', value: 28000, stage: LeadStage.DRAFT, status: 'open' } }),
   ]);
 
-  // Orders for User B
   await Promise.all([
     prisma.order.create({ data: { leadId: leadsB[0].id, value: 84000, paidAmount: 84000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2026-06-01') } }),
     prisma.order.create({ data: { leadId: leadsB[7].id, value: 74000, paidAmount: 37000, deliveryStatus: DeliveryStatus.IN_PROGRESS, deliveryDate: new Date('2026-04-18') } }),
     prisma.order.create({ data: { leadId: leadsB[2].id, value: 48000, paidAmount: 24000, deliveryStatus: DeliveryStatus.PENDING, deliveryDate: new Date('2026-03-05') } }),
     prisma.order.create({ data: { leadId: leadsB[5].id, value: 56000, paidAmount: 56000, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2026-02-12') } }),
   ]);
-
-  // ─── User C: Early Stage ─────────────────────────────────────────────────
 
   const userC = await prisma.user.create({
     data: {
@@ -478,7 +445,6 @@ async function main() {
     },
   });
 
-  // Channels for C1
   const chanC1_1 = await prisma.channel.create({
     data: {
       strategyId: stratC1.id,
@@ -497,7 +463,6 @@ async function main() {
     },
   });
 
-  // Activities for C channels
   const actC1_1_1 = await prisma.activity.create({
     data: {
       channelId: chanC1_1.id,
@@ -534,7 +499,6 @@ async function main() {
     },
   });
 
-  // Leads for User C
   const leadsC = await Promise.all([
     prisma.lead.create({ data: { activityId: actC1_1_1.id, company: 'Cognizant Technology', contactName: 'Senthil Kumar', value: 8400, stage: LeadStage.SALES, status: 'open' } }),
     prisma.lead.create({ data: { activityId: actC1_1_1.id, company: 'Tata Elxsi', contactName: 'Bala Krishna', value: 6200, stage: LeadStage.CHEMISTRY, status: 'open' } }),
@@ -542,7 +506,6 @@ async function main() {
     prisma.lead.create({ data: { activityId: actC1_2_2.id, company: 'Sonata Software', contactName: 'Selvam Rajan', value: 4800, stage: LeadStage.DRAFT, status: 'open' } }),
   ]);
 
-  // Orders for User C
   await Promise.all([
     prisma.order.create({ data: { leadId: leadsC[2].id, value: 3600, paidAmount: 3600, deliveryStatus: DeliveryStatus.DELIVERED, deliveryDate: new Date('2026-05-25') } }),
     prisma.order.create({ data: { leadId: leadsC[0].id, value: 8400, paidAmount: 4200, deliveryStatus: DeliveryStatus.PENDING, deliveryDate: new Date('2026-01-30') } }),

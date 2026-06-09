@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// prisma.module.ts — Global Prisma Module
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Global, Module } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 

@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// app/analytics/page.tsx — Detailed Performance Analytics
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { useMemo } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useDashboard } from '@/hooks/useDashboard';
@@ -17,7 +12,6 @@ import { AnimatedNumber } from '@/components/dashboard/AnimatedNumber';
 export default function AnalyticsPage() {
   const { data, isLoading, isError, error } = useDashboard();
 
-  // Compute advanced metrics
   const stats = useMemo(() => {
     if (!data) return null;
 
@@ -25,20 +19,15 @@ export default function AnalyticsPage() {
     const totalCost = data.channels.reduce((sum, c) => sum + c.cost, 0);
     const totalRevenue = data.kpis.totalRevenue;
     
-    // ROI = (Revenue - Cost) / Cost * 100
     const netProfit = totalRevenue - totalCost;
     const roi = totalCost > 0 ? (netProfit / totalCost) * 100 : 0;
     
-    // Budget efficiency (spent vs budget)
     const budgetUtilization = totalBudget > 0 ? (totalCost / totalBudget) * 100 : 0;
 
-    // Strategies metrics
     const strategyPerformances = data.strategies.map((strategy) => {
-      // Find channels under this strategy
       const strategyChannels = data.channels.filter((c) => c.strategyId === strategy.id);
       const cost = strategyChannels.reduce((sum, c) => sum + c.cost, 0);
       
-      // Find leads under these channels
       const channelIds = new Set(strategyChannels.map((c) => c.id));
       const strategyActivities = data.activities.filter((a) => channelIds.has(a.channelId));
       const activityIds = new Set(strategyActivities.map((a) => a.id));

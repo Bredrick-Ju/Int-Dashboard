@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// lib/utils.ts — Class name utility
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 

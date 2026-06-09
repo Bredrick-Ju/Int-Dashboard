@@ -1,9 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// Shared Types — Worklyft Real-Time Revenue Operations Dashboard
-// ─────────────────────────────────────────────────────────────────────────────
-
-// ─── Enums ───────────────────────────────────────────────────────────────────
-
 export enum ActivityStatus {
   ACTIVE = 'ACTIVE',
   PENDING = 'PENDING',
@@ -24,8 +18,6 @@ export enum DeliveryStatus {
   DELIVERED = 'DELIVERED',
 }
 
-// ─── User ─────────────────────────────────────────────────────────────────────
-
 export interface User {
   id: string;
   name: string;
@@ -33,8 +25,6 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
-
-// ─── Strategy ────────────────────────────────────────────────────────────────
 
 export interface Strategy {
   id: string;
@@ -49,8 +39,6 @@ export interface Strategy {
   channels?: Channel[];
 }
 
-// ─── Channel ─────────────────────────────────────────────────────────────────
-
 export interface Channel {
   id: string;
   strategyId: string;
@@ -59,8 +47,6 @@ export interface Channel {
   metadata: Record<string, unknown>;
   activities?: Activity[];
 }
-
-// ─── Activity ────────────────────────────────────────────────────────────────
 
 export interface Activity {
   id: string;
@@ -74,8 +60,6 @@ export interface Activity {
   leads?: Lead[];
 }
 
-// ─── Lead ────────────────────────────────────────────────────────────────────
-
 export interface Lead {
   id: string;
   activityId: string;
@@ -88,8 +72,6 @@ export interface Lead {
   activity?: Pick<Activity, 'id' | 'name' | 'channelId'>;
 }
 
-// ─── Order ───────────────────────────────────────────────────────────────────
-
 export interface Order {
   id: string;
   leadId: string;
@@ -99,8 +81,6 @@ export interface Order {
   deliveryDate: string;
   lead?: Pick<Lead, 'id' | 'company' | 'contactName'>;
 }
-
-// ─── KPI ─────────────────────────────────────────────────────────────────────
 
 export interface KpiData {
   totalRevenue: number;
@@ -112,8 +92,6 @@ export interface KpiData {
   leadsGrowth: number;
   strategiesGrowth: number;
 }
-
-// ─── Chart Data ───────────────────────────────────────────────────────────────
 
 export interface StrategyBudgetChartItem {
   name: string;
@@ -149,8 +127,6 @@ export interface ChartData {
   revenueTrend: RevenueTrendItem[];
 }
 
-// ─── Revenue Summary ─────────────────────────────────────────────────────────
-
 export interface RevenueSummary {
   totalRevenue: number;
   totalPaid: number;
@@ -160,8 +136,6 @@ export interface RevenueSummary {
   inProgressOrders: number;
   pendingOrders: number;
 }
-
-// ─── Dashboard Response ───────────────────────────────────────────────────────
 
 export interface DashboardData {
   kpis: KpiData;
@@ -173,8 +147,6 @@ export interface DashboardData {
   charts: ChartData;
   revenueSummary: RevenueSummary;
 }
-
-// ─── Socket Events ────────────────────────────────────────────────────────────
 
 export interface SocketLeadUpdatedPayload {
   leadId: string;
@@ -217,8 +189,6 @@ export enum SocketEvents {
   JOIN_ROOM = 'join_room',
   LEAVE_ROOM = 'leave_room',
 }
-
-// ─── API DTOs ─────────────────────────────────────────────────────────────────
 
 export interface UpdateLeadStageDto {
   stage: LeadStage;

@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// app/revenue/page.tsx — Revenue Ledger and Detailed Orders
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useDashboard } from '@/hooks/useDashboard';
 import { RevenueTable } from '@/components/dashboard/RevenueTable';

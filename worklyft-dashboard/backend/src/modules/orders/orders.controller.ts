@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// orders.controller.ts
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Controller, Get, Post, Param, Body } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 import { OrdersService } from './orders.service';

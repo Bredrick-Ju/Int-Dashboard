@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// app/admin/page.tsx — Admin Control Center
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
@@ -23,16 +18,13 @@ export default function AdminPage() {
   const { data, isLoading } = useDashboard();
   const queryClient = useQueryClient();
 
-  // Selected entities for controls
   const [selectedLeadId, setSelectedLeadId] = useState('');
   const [selectedActivityId, setSelectedActivityId] = useState('');
 
-  // New order form state
   const [orderValue, setOrderValue] = useState('15000');
   const [orderPaid, setOrderPaid] = useState('5000');
   const [deliveryStatus, setDeliveryStatus] = useState<DeliveryStatus>('PENDING');
 
-  // Mutations
   const updateLeadMutation = useMutation({
     mutationFn: ({ id, stage }: { id: string; stage: LeadStage }) =>
       api.leads.updateStage(id, stage),
@@ -68,7 +60,6 @@ export default function AdminPage() {
     onSuccess: () => {
       toast.success('Order created successfully and synced!');
       queryClient.invalidateQueries({ queryKey: ['dashboard', activeUser?.id] });
-      // Reset order value / paid amount forms
       setOrderValue('15000');
       setOrderPaid('5000');
     },
