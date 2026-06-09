@@ -39,9 +39,7 @@ export function Sidebar() {
         <span className="text-sm font-semibold text-foreground tracking-tight">
           Worklyft
         </span>
-        <span className="ml-auto text-[10px] font-medium text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-1.5 py-0.5 rounded-full">
-          BETA
-        </span>
+
       </div>
 
       {/* Navigation */}
@@ -77,7 +75,7 @@ export function Sidebar() {
       <div className="mt-auto pt-4 border-t border-border">
         <div className="flex items-center gap-2 px-3 py-2">
           <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs text-muted-foreground">Live WebSocket</span>
+          <span className="text-xs text-muted-foreground">Developed by Bredrick</span>
         </div>
       </div>
     </aside>
