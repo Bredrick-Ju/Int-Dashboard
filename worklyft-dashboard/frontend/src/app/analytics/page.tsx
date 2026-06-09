@@ -12,6 +12,7 @@ import { AlertCircle, TrendingUp, IndianRupee, Target, Award, PieChart, BarChart
 import { StrategyBudgetChart } from '@/components/dashboard/StrategyBudgetChart';
 import { ChannelPerformanceChart } from '@/components/dashboard/ChannelPerformanceChart';
 import { cn } from '@/lib/utils';
+import { AnimatedNumber } from '@/components/dashboard/AnimatedNumber';
 
 export default function AnalyticsPage() {
   const { data, isLoading, isError, error } = useDashboard();
@@ -121,7 +122,10 @@ export default function AnalyticsPage() {
               <p className="text-xs text-muted-foreground">Return on Investment (ROI)</p>
               <h3 className={cn('text-xl font-bold mt-1 tracking-tight', stats.roi >= 0 ? 'text-emerald-400' : 'text-rose-400')}>
                 {stats.roi >= 0 ? '+' : ''}
-                {stats.roi.toFixed(1)}%
+                <AnimatedNumber
+                  value={Math.abs(stats.roi) * 10}
+                  formatter={(v) => `${(v / 10).toFixed(1)}%`}
+                />
               </h3>
               <p className="text-[10px] text-muted-foreground mt-0.5">Revenue relative to channel costs</p>
             </div>
@@ -134,10 +138,16 @@ export default function AnalyticsPage() {
             <div>
               <p className="text-xs text-muted-foreground">Budget Allocation</p>
               <h3 className="text-xl font-bold text-foreground mt-1 tracking-tight">
-                {formatCurrency(stats.totalCost)} / {formatCurrency(stats.totalBudget, true)}
+                <AnimatedNumber value={stats.totalCost} formatter={(v) => formatCurrency(v)} />
+                {' / '}
+                <AnimatedNumber value={stats.totalBudget} formatter={(v) => formatCurrency(v, true)} />
               </h3>
               <p className="text-[10px] text-muted-foreground mt-0.5">
-                {stats.budgetUtilization.toFixed(1)}% of allocated budget utilized
+                <AnimatedNumber
+                  value={stats.budgetUtilization * 10}
+                  formatter={(v) => `${(v / 10).toFixed(1)}%`}
+                />
+                {' of allocated budget utilized'}
               </p>
             </div>
           </div>
@@ -149,10 +159,17 @@ export default function AnalyticsPage() {
             <div>
               <p className="text-xs text-muted-foreground">Pipeline Conversion</p>
               <h3 className="text-xl font-bold text-foreground mt-1 tracking-tight">
-                {data.orders.length} / {data.leads.length} Orders
+                <AnimatedNumber value={data.orders.length} formatter={(v) => String(v)} />
+                {' / '}
+                <AnimatedNumber value={data.leads.length} formatter={(v) => String(v)} />
+                {' Orders'}
               </h3>
               <p className="text-[10px] text-muted-foreground mt-0.5">
-                {data.leads.length > 0 ? ((data.orders.length / data.leads.length) * 100).toFixed(1) : 0}% lead-to-order rate
+                <AnimatedNumber
+                  value={data.leads.length > 0 ? (data.orders.length / data.leads.length) * 100 * 10 : 0}
+                  formatter={(v) => `${(v / 10).toFixed(1)}%`}
+                />
+                {' lead-to-order rate'}
               </p>
             </div>
           </div>

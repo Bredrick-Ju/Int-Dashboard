@@ -9,6 +9,7 @@ import { useDashboard } from '@/hooks/useDashboard';
 import { RevenueTable } from '@/components/dashboard/RevenueTable';
 import { formatCurrency, formatNumber } from '@/lib/formatters';
 import { AlertCircle, CreditCard, IndianRupee, Hourglass, CheckCircle2 } from 'lucide-react';
+import { AnimatedNumber } from '@/components/dashboard/AnimatedNumber';
 
 export default function RevenuePage() {
   const { data, isLoading, isError, error } = useDashboard();
@@ -51,28 +52,32 @@ export default function RevenuePage() {
   const cards = [
     {
       title: 'Total Contract Value',
-      value: formatCurrency(revenueSummary.totalRevenue),
+      rawValue: revenueSummary.totalRevenue,
+      formatter: (v: number) => formatCurrency(v),
       icon: <IndianRupee className="w-4 h-4 text-indigo-400" />,
       sub: 'All registered sales orders',
       bg: 'bg-indigo-500/10 border-indigo-500/20',
     },
     {
       title: 'Realized Revenue',
-      value: formatCurrency(revenueSummary.totalPaid),
+      rawValue: revenueSummary.totalPaid,
+      formatter: (v: number) => formatCurrency(v),
       icon: <CheckCircle2 className="w-4 h-4 text-emerald-400" />,
       sub: 'Total paid-in amount',
       bg: 'bg-emerald-500/10 border-emerald-500/20',
     },
     {
       title: 'Outstanding Pipeline',
-      value: formatCurrency(revenueSummary.totalPending),
+      rawValue: revenueSummary.totalPending,
+      formatter: (v: number) => formatCurrency(v),
       icon: <Hourglass className="w-4 h-4 text-amber-400" />,
       sub: 'Unpaid pending orders',
       bg: 'bg-amber-500/10 border-amber-500/20',
     },
     {
       title: 'Average Order Value',
-      value: formatCurrency(revenueSummary.averageOrderValue),
+      rawValue: revenueSummary.averageOrderValue,
+      formatter: (v: number) => formatCurrency(v),
       icon: <CreditCard className="w-4 h-4 text-sky-400" />,
       sub: 'Across all order statuses',
       bg: 'bg-sky-500/10 border-sky-500/20',
@@ -107,7 +112,9 @@ export default function RevenuePage() {
                 </div>
               </div>
               <div className="mt-2">
-                <h3 className="text-lg font-bold text-foreground tracking-tight">{c.value}</h3>
+                <h3 className="text-lg font-bold text-foreground tracking-tight">
+                  <AnimatedNumber value={c.rawValue} formatter={c.formatter} />
+                </h3>
                 <p className="text-[10px] text-muted-foreground mt-0.5">{c.sub}</p>
               </div>
             </div>
@@ -117,12 +124,16 @@ export default function RevenuePage() {
         {/* Delivery Progress Bar */}
         <section className="glass-card p-5" aria-label="Fulfillment funnel">
           <div className="flex items-center justify-between text-xs mb-3">
-            <span className="font-semibold text-foreground">Fulfillment Status ({totalDeliveries} orders)</span>
+            <span className="font-semibold text-foreground">
+              Fulfillment Status (<AnimatedNumber value={totalDeliveries} formatter={(v) => String(v)} /> orders)
+            </span>
             <div className="flex items-center gap-4 text-muted-foreground text-[10px]">
               {deliveryStats.map((stat, i) => (
                 <div key={i} className="flex items-center gap-1.5">
                   <span className={`w-2 h-2 rounded-full ${stat.color}`} />
-                  <span>{stat.label} ({stat.count})</span>
+                  <span>
+                    {stat.label} (<AnimatedNumber value={stat.count} formatter={(v) => String(v)} />)
+                  </span>
                 </div>
               ))}
             </div>

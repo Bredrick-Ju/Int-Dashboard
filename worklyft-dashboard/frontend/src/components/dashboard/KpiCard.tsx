@@ -4,10 +4,10 @@
 // components/dashboard/KpiCard.tsx — Single animated KPI card
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
-import { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { AnimatedNumber } from './AnimatedNumber';
 
 interface KpiCardProps {
   id: string;
@@ -20,20 +20,7 @@ interface KpiCardProps {
   delay?: number;
 }
 
-function AnimatedNumber({ value, formatter }: { value: number; formatter: (v: number) => string }) {
-  const motionVal = useMotionValue(0);
-  const displayed = useTransform(motionVal, (v) => formatter(Math.round(v)));
 
-  useEffect(() => {
-    const controls = animate(motionVal, value, {
-      duration: 1.2,
-      ease: 'easeOut',
-    });
-    return controls.stop;
-  }, [value, motionVal]);
-
-  return <motion.span>{displayed}</motion.span>;
-}
 
 export function KpiCard({ id, title, value, growth, icon, formatter, color, delay = 0 }: KpiCardProps) {
   const isPositive = growth >= 0;
