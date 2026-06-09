@@ -1,6 +1,6 @@
-# System Architecture & Design Specification
+# Worklyft System Architecture & Design Specification
 
-This document details the architectural decisions, database modeling, real-time WebSocket communication flows, and performance optimizations implemented in the Worklyft Real-Time Revenue Operations Dashboard.
+This document details the architectural decisions, database modeling, real-time WebSocket communication flows, and performance optimizations implemented in the **Worklyft Real-Time Revenue Operations (RevOps) Dashboard**.
 
 ---
 
@@ -8,68 +8,136 @@ This document details the architectural decisions, database modeling, real-time 
 
 ```mermaid
 graph TD
-  subgraph Client [Next.js Client]
-    UI[React Components / UI]
-    State[Zustand Store]
-    Cache[TanStack Query Cache]
-    SocketClient[Socket.io-client]
+  subgraph Client ["Next.js Client (Port 3000)"]
+    UI["React Components / UI (App Router)"]
+    State["Zustand Store (useAppStore)"]
+    Cache["TanStack Query Cache (QueryClient)"]
+    SocketClient["Socket.io Client Manager"]
+    Toast["Sonner Notifications"]
   end
 
-  subgraph Gateway [API & Gateway Router]
-    Nginx[Reverse Proxy / Nginx]
+  subgraph Backend ["NestJS Server (Port 4000)"]
+    Controller["REST Controllers (v1)"]
+    WSGateway["Socket.io EventsGateway"]
+    Service["Services (Dashboard/Leads/etc.)"]
+    Prisma["Prisma ORM Client"]
   end
 
-  subgraph Backend [NestJS Server]
-    Controller[REST Controllers]
-    WSGateway[Socket.io Gateway]
-    Service[Services / Aggregation]
-    Prisma[Prisma ORM]
-  end
-
-  subgraph Database [PostgreSQL]
-    Tables[(User / Strategy / Lead / Order Tables)]
+  subgraph Database ["Database Layer"]
+    Postgres[(PostgreSQL Instance)]
   end
 
   UI --> State
   UI --> Cache
-  Cache -->|HTTP Requests| Controller
-  SocketClient -->|WS Rooms| WSGateway
+  Cache -->|HTTP Requests / REST| Controller
+  SocketClient -->|WS Room Join/Leave| WSGateway
   Controller --> Service
   WSGateway --> Service
   Service --> Prisma
-  Prisma --> Database
+  Prisma --> Postgres
   WSGateway -.->|Real-Time Rooms Broadcast| SocketClient
+  SocketClient -->|Trigger Invalidation| Cache
+  SocketClient -->|Show Event Toast| Toast
+```
+
+### Architectural Pillars
+1. **Next.js Client (Frontend):** Serves the interactive user interface using React 19 and Next.js 15 (App Router). UI components are styled using Tailwind CSS and leverage Framer Motion for premium, fluid micro-animations. State management is split between **Zustand** (for global client states like active user and socket status) and **TanStack Query** (for caching server responses).
+2. **NestJS Application (Backend):** Built as an enterprise-ready modular TypeScript backend. REST APIs are exposed under `/api` (structured and documented with Swagger), and websocket connections are handled via the NestJS WebSockets/Socket.io gateway.
+3. **Prisma ORM & PostgreSQL (Persistence):** Manages relational database transactions, enforcing foreign key integrity and cascading deletes.
+4. **Shared Workspace Layer (Common Package):** Holds TypeScript models, enums, DTO wrappers, and WebSocket event declarations (`SocketEvents`), ensuring full type safety between the client and the server.
+
+---
+
+## 2. Multi-User Executive Persona Architecture
+
+Worklyft is designed around multi-user data isolation. Instead of generic metrics, the dashboard alters its entire data set based on the active executive persona selected by the client:
+
+| Executive Persona | Budget Level | Revenue Target | Strategic Target Focus |
+| :--- | :--- | :--- | :--- |
+| **Ashwin (Aggressive)** | ₹1,800,000+ | ₹8,600,000+ | High-volume market expansion & enterprise acquisition |
+| **Vithya (Steady)** | Moderate | Balanced | Retention, expansion, and mid-market growth |
+| **Bredrick (Early)** | ₹45,000 | Minimal | Validator outreach, founder-led sales, & hacker communities |
+
+### Relational Hierarchy
+Each persona is a database entry in the `User` model, acting as the root node of the operational hierarchy:
+```text
+User (Persona)
+  └── Strategy (Strategic business goals & budgets)
+        └── Channel (Marketing & sales channels: e.g. Ads, Outbound)
+              └── Activity (Actionable items: e.g. Campaign, Pitch Deck)
+                    └── Lead (Client prospects & deal stages)
+                          └── Order (Finalized sales contracts & paid values)
 ```
 
 ---
 
-## 2. Real-Time Synchronization Flow
+## 3. Real-Time Room Synchronization Mechanics
 
-Worklyft utilizes a **pub/sub style room synchronization pattern** using Socket.io to achieve localized real-time updates:
+To achieve seamless instant updating without reloading pages, Worklyft implements a targeted **WebSocket Room Synchronization** pattern.
 
-1. **Room Association:**
-   - When the user selects or switches to an executive persona, the client emits a `join_room` event with the `userId` payload.
-   - The NestJS WebSocket Gateway intercepts this and joins the client socket to a room named after the specific `userId`.
-   - If the user switches personas, they emit `leave_room` for the old ID and `join_room` for the new ID.
+```
+[Client]                      [REST API]                   [EventsGateway]                  [Other Client]
+   |                              |                              |                                |
+   |----- join_room (userId) ---->|                              |                                |
+   |                              |------ Join Room `user:id` --->|                                |
+   |                                                             |                                |
+   |-- 1. HTTP Mutation (PATCH) ->|                              |                                |
+   |                              |-- 2. DB Transaction Commit ->|                                |
+   |                              |-- 3. Trigger Broadcast ----->|                                |
+   |                              |                              |---- 4. Emit event to Room ---->| (Updates instantly)
+   |                              |                              |      ("lead.updated" payload)  |
+   |<--------------------------- 5. Receive WebSocket Event --------------------------------------|
+   |-- 6. Invalidate Query Cache -|
+   |-- 7. Fetch New Dashboard ----> (Refetched & Animated)
+```
 
-2. **Mutation & Broadcast Trigger:**
-   - Any transaction that changes dashboard state (e.g. advancing a lead stage on the Kanban board, toggling a marketing activity status, committing an order) is submitted via a REST POST/PATCH request to the backend.
-   - The REST controller processes the state change in the database.
-   - Upon successful database commit, the controller calls the `EventsGateway` to emit a specific event (e.g., `lead.updated`, `order.created`, `activity.updated`) specifically to the user's room.
-
-3. **Client-Side Refetching:**
-   - The frontend `SocketProvider` listens for these events.
-   - When an event is received, it triggers a custom visual toast notification using `sonner` (e.g. "Lead for Stripe advanced to closure stage!").
-   - It programmatically calls `queryClient.invalidateQueries({ queryKey: ['dashboard', activeUserId] })`.
-   - TanStack Query automatically refetches the dashboard dataset, updating all charts and grids smoothly.
+### Detailed Flow:
+1. **User Room Association:**
+   - On application mount or persona switch, the frontend emits a `join_room` message with the selected `userId`.
+   - The NestJS `EventsGateway` intercepts this message, leaves any previously active rooms matching `user:*`, and subscribes the client connection to `user:${userId}`.
+   - Reconnection safety is handled by the client-side `SocketProvider`: upon socket reconnection, it re-emits `join_room` for the active user.
+2. **State Mutation:**
+   - Client modifications (e.g. dragging a lead column, creating an order, or altering activity status) are submitted as standard HTTP requests (`POST`/`PATCH`).
+   - The backend controller processes the update in the database via Prisma.
+3. **Targeted Room Broadcast:**
+   - On successful database commit, the backend service calls `EventsGateway`.
+   - The gateway emits a room-specific websocket event (e.g. `lead.updated`, `order.created`, or `activity.updated`) targeting ONLY the room `user:${userId}`. This ensures data isolation is maintained over socket connections.
+4. **Client Cache Invalidation:**
+   - The client-side `SocketProvider` captures the room events.
+   - It triggers a visually engaging toast message using **Sonner** describing the change.
+   - It programmatically calls `queryClient.invalidateQueries({ queryKey: ['dashboard'] })`, causing TanStack Query to run a background refetch and animate the updated metrics.
 
 ---
 
-## 3. Database Schema
+## 4. Relational Database Schema
 
-The database is built on PostgreSQL. The schema supports strict relational integrity and cascading deletes:
+The database schema is defined in [schema.prisma](file:///f:/Dashboard/Int-Dashboard/worklyft-dashboard/backend/prisma/schema.prisma) and maps to PostgreSQL tables. Relational links enforce cascading deletes:
 
 ```prisma
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum ActivityStatus {
+  ACTIVE
+  PENDING
+  COMPLETED
+}
+
+enum LeadStage {
+  DRAFT
+  CHEMISTRY
+  SALES
+  EVALUATION
+  CLOSURE
+}
+
+enum DeliveryStatus {
+  PENDING
+  IN_PROGRESS
+  DELIVERED
+}
+
+// ─── Models ──────────────────────────────────────────────────────────────────
+
 model User {
   id         String     @id @default(cuid())
   name       String
@@ -77,6 +145,8 @@ model User {
   strategies Strategy[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+
+  @@map("users")
 }
 
 model Strategy {
@@ -91,6 +161,10 @@ model Strategy {
   metadata      Json      @default("{}")
   user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   channels      Channel[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("strategies")
 }
 
 model Channel {
@@ -101,6 +175,10 @@ model Channel {
   metadata   Json       @default("{}")
   strategy   Strategy   @relation(fields: [strategyId], references: [id], onDelete: Cascade)
   activities Activity[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@map("channels")
 }
 
 model Activity {
@@ -114,6 +192,10 @@ model Activity {
   endDate   DateTime
   channel   Channel        @relation(fields: [channelId], references: [id], onDelete: Cascade)
   leads     Lead[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@map("activities")
 }
 
 model Lead {
@@ -126,6 +208,10 @@ model Lead {
   status     String     @default("open")
   activity   Activity   @relation(fields: [activityId], references: [id], onDelete: Cascade)
   orders     Order[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@map("leads")
 }
 
 model Order {
@@ -136,21 +222,29 @@ model Order {
   deliveryStatus DeliveryStatus @default(PENDING)
   deliveryDate   DateTime
   lead           Lead           @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@map("orders")
 }
 ```
 
 ---
 
-## 4. Performance Optimizations
+## 5. Performance Optimizations & Architecture Patterns
 
-### Optimized Single-Query Aggregation
-To prevent the common **N+1 query problem** when rendering complex dashboard components, `DashboardService` implements an optimized deep join using Prisma:
-- The entire hierarchy (`Strategy → Channel → Activity → Lead → Order`) is resolved in a single Prisma query.
-- The NestJS service flattens and groups this structure in-memory on the server.
-- This results in a massive response time reduction (often sub-10ms) compared to executing individual REST calls for strategies, activities, leads, and orders.
+### Single-Query Deep Aggregation Pipeline
+To optimize dashboard load times and eliminate **N+1 query bottlenecks**, the `DashboardService` fetches the entire nested relational hierarchy in a single query:
+- Resolves: `User → Strategy → Channel → Activity → Lead → Order` in a single query.
+- The NestJS service flattens and parses the results in-memory.
+- Reduces dashboard page loading queries from dozens down to a single optimized fetch, resulting in average server processing times of **sub-10ms**.
 
-### Optimistic UI Updates
-For the lead Kanban board, waiting for network roundtrips during drag-and-drop actions can feel sluggish.
-- When a card is dragged and dropped, the client immediately updates the local React state, advancing the card's column.
-- The mutation is dispatched in the background.
-- If the server succeeds, the cache is updated. If the server fails, a toast is shown, and the board seamlessly rolls back to its previous state.
+### Client-Side Optimistic UI Updates
+For the Lead Kanban board:
+- Moving cards across columns immediately triggers client-side local state updates in the UI for instant feedback.
+- The background REST API request is made concurrently.
+- If the server request succeeds, the client synchronizes the final cache. If it fails, the frontend automatically rolls back the card to its original position and alerts the user via a Sonner toast notification.
+
+### Scalable Metadata fields
+- The `Strategy` and `Channel` models support a `metadata` JSON field.
+- This allows flexible extensions (e.g. tagging campaigns, adding custom regional flags, or capturing external integration IDs) without requiring database migrations.
