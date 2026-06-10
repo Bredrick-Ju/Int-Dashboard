@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// components/layout/Topbar.tsx
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { Wifi, WifiOff } from 'lucide-react';
 import { UserSwitcher } from './UserSwitcher';
 import { useAppStore } from '@/store/useAppStore';

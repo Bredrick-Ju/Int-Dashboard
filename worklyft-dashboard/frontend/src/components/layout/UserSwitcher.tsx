@@ -1,9 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// components/layout/UserSwitcher.tsx
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQueryClient } from '@tanstack/react-query';
 import { ChevronDown, Rocket, TrendingUp, Sprout, Check } from 'lucide-react';
@@ -39,22 +34,23 @@ const PERSONA_META = {
 
 export function UserSwitcher() {
   const [open, setOpen] = useState(false);
+  const [switching, setSwitching] = useState(false);
   const { activeUser, users, setActiveUser, setIsTransitioning } = useAppStore();
   const queryClient = useQueryClient();
-  useUsers(); // bootstrap
+  useUsers();
 
   const handleSwitch = async (user: AppUser) => {
     if (user.id === activeUser?.id) { setOpen(false); return; }
     setOpen(false);
+    setSwitching(true);
     setIsTransitioning(true);
 
-    // Invalidate dashboard cache for new user
     queryClient.invalidateQueries({ queryKey: ['dashboard', user.id] });
     setActiveUser(user);
 
-    // Brief transition delay for animation
-    await new Promise((r) => setTimeout(r, 350));
+    await new Promise((r) => setTimeout(r, 400));
     setIsTransitioning(false);
+    setSwitching(false);
   };
 
   if (!activeUser) {
@@ -68,17 +64,21 @@ export function UserSwitcher() {
 
   return (
     <div className="relative" id="user-switcher">
-      <button
+      <motion.button
         id="user-switcher-trigger"
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label="Switch active user"
         onClick={() => setOpen((v) => !v)}
+        animate={switching ? { scale: [1, 0.96, 1] } : { scale: 1 }}
+        transition={{ duration: 0.3 }}
         className={cn(
           'flex items-center gap-2.5 h-9 px-3 rounded-lg border text-sm font-medium',
           'transition-all duration-200 hover:border-white/10 hover:bg-white/[0.04]',
+          switching && 'ring-2 ring-offset-1 ring-offset-background',
           meta.bg,
         )}
+        style={switching ? { ringColor: meta.dot } : {}}
       >
         <span className={cn('w-2 h-2 rounded-full', meta.dot)} />
         <ActiveIcon className={cn('w-3.5 h-3.5', meta.color)} aria-hidden="true" />
@@ -87,7 +87,7 @@ export function UserSwitcher() {
         <ChevronDown
           className={cn('w-3.5 h-3.5 text-muted-foreground transition-transform', open && 'rotate-180')}
         />
-      </button>
+      </motion.button>
 
       <AnimatePresence>
         {open && (
