@@ -147,19 +147,19 @@ worklyft-dashboard/
 ## Screenshots
 
 ### Dashboard
-![Dashboard](./screenshots/dashboard.png)
+![Dashboard](./worklyft-dashboard/screenshots/dashboard.png)
 
 ### Analytics
-![Analytics](./screenshots/analytics.png)
+![Analytics](./worklyft-dashboard/screenshots/analytics.png)
 
 ### Revenue
-![Revenue](./screenshots/revenue.png)
+![Revenue](./worklyft-dashboard/screenshots/revenue.png)
 
 ### Admin
-![Admin](./screenshots/admin.png)
+![Admin](./worklyft-dashboard/screenshots/admin.png)
 
 ### Swagger UI
-![Swagger UI](./screenshots/swagger.png)
+![Swagger UI](./worklyft-dashboard/screenshots/swagger.png)
 
 ---
 
