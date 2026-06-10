@@ -15,6 +15,7 @@ const PERSONA_META = {
     color: 'text-rose-400',
     bg: 'bg-rose-500/10 border-rose-500/20',
     dot: 'bg-rose-400',
+    ring: 'ring-rose-400',
   },
   steady: {
     label: 'Steady State',
@@ -22,6 +23,7 @@ const PERSONA_META = {
     color: 'text-indigo-400',
     bg: 'bg-indigo-500/10 border-indigo-500/20',
     dot: 'bg-indigo-400',
+    ring: 'ring-indigo-400',
   },
   early: {
     label: 'Early Stage',
@@ -29,6 +31,7 @@ const PERSONA_META = {
     color: 'text-emerald-400',
     bg: 'bg-emerald-500/10 border-emerald-500/20',
     dot: 'bg-emerald-400',
+    ring: 'ring-emerald-400',
   },
 };
 
@@ -76,9 +79,9 @@ export function UserSwitcher() {
           'flex items-center gap-2.5 h-9 px-3 rounded-lg border text-sm font-medium',
           'transition-all duration-200 hover:border-white/10 hover:bg-white/[0.04]',
           switching && 'ring-2 ring-offset-1 ring-offset-background',
+          switching && meta.ring,
           meta.bg,
         )}
-        style={switching ? { ringColor: meta.dot } : {}}
       >
         <span className={cn('w-2 h-2 rounded-full', meta.dot)} />
         <ActiveIcon className={cn('w-3.5 h-3.5', meta.color)} aria-hidden="true" />
